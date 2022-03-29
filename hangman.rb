@@ -3,12 +3,13 @@
 require_relative 'gameplay'
 require_relative 'game_file_control'
 require_relative 'player'
+require_relative 'color'
 
 # HangMan = GamePlay + file control
 class HangMan < GameFileControl
   def initialize
     print "Type saved gameplay name -> hit Enter to load gameplay data\n" \
-          ' or leave it blank -> hit Enter create new game: '
+          ' or leave it blank -> hit Enter create new game: '.magenta
     id = gets.chomp
     if id == ''
       super(Player.new)
@@ -21,14 +22,13 @@ class HangMan < GameFileControl
 
   def run_multiple_games
     loop do
+      @answer = load_dict.sample if @answer == ''
       run_game
-      print 'Do you want to continue? (y/n): '
+      print 'Do you want to continue? (y/n): '.magenta
       choice = gets.chomp
       break if choice == 'n'
-
-      @answer = load_dict.sample
     end
-    print 'Thank you for playing :)'
+    puts 'Thank you for playing :)'.yellow
   end
 
   def run_game
@@ -44,7 +44,7 @@ class HangMan < GameFileControl
   end
 
   def show_options
-    print 'Hit "s" to save the game and continue, Enter to continue without saving: '
+    print 'Hit "s" to save the game and continue, Enter to continue without saving: '.magenta
     input = gets.chomp
     save_gameplay if input == 's'
   end

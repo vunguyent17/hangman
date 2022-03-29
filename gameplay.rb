@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'player'
+require_relative 'color'
 
 # HangMan GamePlay
 class GamePlay
@@ -9,7 +10,6 @@ class GamePlay
     @guessed_letter = []
     @trials = 10
     @answer = load_dict.sample
-    @is_finish = false
   end
 
   def load_dict
@@ -29,7 +29,7 @@ class GamePlay
       chosen_letter = @player.guess_letter
       break unless @guessed_letter.include?(chosen_letter)
 
-      puts 'You have chosen this letter. Try again'
+      puts 'You have chosen this letter. Try again'.red
     end
     chosen_letter
   end
@@ -47,33 +47,33 @@ class GamePlay
   end
 
   def display_result
-    if (@answer.split('') - @guessed_letter).length.zero?
-      puts "Player #{@player.name} has guessed the word. "
-      + "The answer is #{@answer}. #{@player.name} has #{@player.score += 1} points"
-    else
-      puts "You have run out of trial. The answer is #{@answer}. "
-      + "#{@player.name} remains with #{@player.score} points"
-    end
-    @is_finish = true
+    announcement = if (@answer.split('') - @guessed_letter).length.zero?
+                     "Player #{@player.name} has guessed the word. " \
+                      + "The answer is #{@answer}. #{@player.name} has #{@player.score += 1} points"
+                   else
+                     "You have run out of trial. The answer is #{@answer}. " \
+                     + "#{@player.name} remains with #{@player.score} points"
+                   end
+    puts announcement.yellow
+    reset_game
   end
 
   def game_trial
-    puts "\n=== You have #{@trials} trials left === \nCurrent word: " + display_word
+    puts "\n=== You have #{@trials} trials left === \nCurrent word: ".cyan + display_word.green
     letter = guess_a_letter
     if @answer.include? letter
-      puts "CORRECT. There are letter '#{letter}' in the answer"
+      puts "CORRECT. There are letter '#{letter}' in the answer".bold.bg_green
     else
       @trials -= 1
-      puts "INCORRECT. There is no '#{letter}' in the answer."
+      puts "INCORRECT. There is no '#{letter}' in the answer.".bold.bg_red
     end
     @guessed_letter.push(letter)
-    puts display_word
+    puts display_word.green
   end
 
   def reset_game
     @guessed_letter = []
     @trials = 10
     @answer = ''
-    @is_finish = false
   end
 end

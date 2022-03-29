@@ -3,6 +3,7 @@
 require_relative 'gameplay'
 require_relative 'basic_serialization'
 require_relative 'player'
+require_relative 'color'
 
 # File control for Hangman game
 class GameFileControl < GamePlay
@@ -14,7 +15,6 @@ class GameFileControl < GamePlay
 
   def save_gameplay
     data_list = load_list_data
-    reset_game if @is_finish
     @id = create_id
     new_save = serialize
     if data_list != [] && (data_list.map { |data| data['id'] }).include?(@id)
@@ -41,14 +41,14 @@ class GameFileControl < GamePlay
       end
     end
     save_file.close
-    puts 'Data overwritten successfully'
+    puts 'Data overwritten successfully'.green
   end
 
   def add_data(new_data)
     save_file = File.open('save_game.txt', 'a')
     save_file.puts(new_data)
     save_file.close
-    puts 'Data added successfully'
+    puts 'Data added successfully'.green
   end
 
   def create_id
@@ -64,10 +64,10 @@ class GameFileControl < GamePlay
 
       unserialize(obj)
       load_file.close
-      puts 'Data loaded successfully'
+      puts 'Data loaded successfully'.green
       return
     end
-    puts 'Error'
+    puts 'Error'.red
   end
 
   def serialize
