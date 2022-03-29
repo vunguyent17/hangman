@@ -1,0 +1,4 @@
+{"player":{"name":"Vu","score":1},"guessed_letter":[],"trials":10,"answer":"","is_finish":false,"id":"save1"}
+{"player":{"name":"Vu","score":1},"guessed_letter":["a","o","i","e","n","s","t","b","l","h"],"trials":9,"answer":"establishing","is_finish":false,"id":"save2"}
+{"player":{"name":"Vu","score":0},"guessed_letter":["a","e"],"trials":9,"answer":"beverly","is_finish":false,"id":"save5"}
+{"player":{"name":"Vu","score":2},"guessed_letter":[],"trials":10,"answer":"","is_finish":false,"id":"sav"}
